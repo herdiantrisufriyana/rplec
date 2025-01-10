@@ -30,6 +30,9 @@ RUN apt-get update && apt-get install -y \
     libtiff5-dev \
     libjpeg-dev \
     cmake \
+    libgit2-dev \
+    texlive-full \
+    qpdf \
     && rm -rf /var/lib/apt/lists/*
 
 # Detect architecture and download the appropriate Miniconda installer
@@ -61,6 +64,11 @@ RUN R -e "BiocManager::install('tidyverse', ask=FALSE, update=FALSE, force=TRUE)
 RUN R -e "BiocManager::install('kableExtra', ask=FALSE, update=FALSE, force=TRUE)"
 RUN R -e "BiocManager::install('ggpubr', ask=FALSE, update=FALSE, force=TRUE)"
 RUN R -e "BiocManager::install('dslabs', ask=FALSE, update=FALSE, force=TRUE)"
+
+# Install additional Python libraries and R packages, chronologically
+RUN R -e "BiocManager::install('devtools', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('roxygen2', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('rhub', ask=FALSE, update=FALSE, force=TRUE)"
 
 # Set the working directory to ~/project on R session start
 RUN echo 'setwd("~/project")' >> /home/rstudio/.Rprofile
