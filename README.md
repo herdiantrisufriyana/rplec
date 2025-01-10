@@ -1,4 +1,100 @@
-# Project template
+# rplec: An R package of placental epigenetic clocks to estimate aging by DNA-methylation-based gestational age
+
+`rplec` is an R package designed to estimate placental aging based on gestational age using DNA methylation levels, so called placental epigenetic clock (PlEC). We developed a PlEC for the 2024 Placental Clock DREAM Challenge (https://www.synapse.org/Synapse:syn59520082/wiki/628063). Our PlEC achieved the top performance based on an independent test set. We also included two previous PlECs from Lee et al (2019) and Mayne et al (2016) in this package. It can be used to identify accelerated/decelerated aging of placenta for understanding placental dysfunction-related conditions, e.g., great obstetrical syndromes including preeclampsia, fetal growth restriction, preterm labor, preterm premature rupture of the membranes, late spontaneous abortion, and placental abruption.
+
+
+## Features
+
+- **Normalize DNA methylation values**: We provided normalization feature based on beta mixture quantile (BMIQ) method before using a PlEC.
+
+- **Estimate DNA-methylation-based gestational age**: Three PlECs are available for estimating gestational age: (1) Sufriyana et al (2024); (2) Lee et al (2019); and (3) Mayne et al.
+
+- **Perform quality control**: A user can evaluate the PlEC accuracy based on calibration plot, root mean squared error (RMSE), mean absolute error (MAE), and correlation coefficient (Pearson's r) before interpreting the DNA-methylation-based gestational age to identify placental aging.
+
+- **Identify placental aging**: Compare placental aging based on DNA-methylation-based gestational age between condition of interest and control.
+
+
+## Installation
+
+You can install `rplec` from CRAN with:
+
+```r
+install.packages("rplec")
+```
+
+You can install the development version of `rplec` from GitHub with:
+
+```r
+# install.packages("devtools")
+devtools::install_github("herdiantrisufriyana/rplec")
+```
+
+
+## Quick Start
+
+Load necessary packages.
+
+```r
+library(rplec)
+```
+
+Load our example data.
+
+```r
+data(beta_values)
+```
+
+Normalize DNA methylation values.
+
+```r
+norm_beta_values <- bmiq_norm(beta_values)
+```
+
+Estimate DNA-methylation-based gestational age.
+
+```r
+dnam_ga_sufriyana <- plec(norm_beta_values, clock = "sufriyana", type = "stack")
+dnam_ga_lee <- plec(norm_beta_values, clock = "lee", type = "rpc")
+dnam_ga_mayne <- plec(norm_beta_values, clock = "mayne")
+```
+
+
+## Vignettes
+
+Explore detailed examples and methodologies in the following vignettes:
+
+- [**Placental Aging Analysis**](https://htmlpreview.github.io/?https://github.com/herdiantrisufriyana/rplec/blob/master/doc/placental_aging_analysis.html): A data analysis pipeline to identify placental aging using `rplec`.
+
+- [**Reference Manual**](https://github.com/herdiantrisufriyana/rplec/blob/master/extras/rplec_0.1.0.pdf): Comprehensive documentation of all functions and features available in `rplec`. Ideal for detailed reference and advanced use cases.
+
+
+## License
+
+`rplec` is licensed under the MIT license. See the LICENSE file for more details.
+
+
+# Citation
+
+If you use `rplec` in your research, please consider citing it:
+
+```bibtex
+@misc{rplec2025,
+  author = {Herdiantri Sufriyana and Emily Chia-Yu Su},
+  title = {rplec: An R package of placental epigenetic clocks to estimate aging by DNA-methylation-based gestational age},
+  year = {2025},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\\url{https://github.com/herdiantrisufriyana/rplec}}
+}
+```
+
+
+## Contact
+
+For questions or support, please contact herdi[at]nycu.edu.tw.
+
+
+# Programming Environment
 
 ## System requirements
 
@@ -6,12 +102,10 @@ Install Docker desktop once in your machine. Start the service every time you bu
 
 ## Installation guide
 
-Change `project_template` to the project image name.
-
 Build the project image once for a new machine (currently support AMD64 and ARM64).
 
 ```{bash}
-docker build -t project_template --load .
+docker build -t rplec --load .
 ```
 
 Run the container every time you start working on the project. Change left-side port numbers for either Rstudio or Jupyter lab if any of them is already used by other applications.
@@ -19,13 +113,13 @@ Run the container every time you start working on the project. Change left-side 
 In terminal:
 
 ```{bash}
-docker run -d -p 8787:8787 -p 8888:8888 -v "$(pwd)":/home/rstudio/project --name project_template_container project_template
+docker run -d -p 8787:8787 -p 8888:8888 -v "$(pwd)":/home/rstudio/project --name rplec_container rplec
 ```
 
 In command prompt:
 
 ```{bash}
-docker run -d -p 8787:8787 -p 8888:8888 -v "%cd%":/home/rstudio/project --name project_template_container project_template
+docker run -d -p 8787:8787 -p 8888:8888 -v "%cd%":/home/rstudio/project --name rplec_container rplec
 ```
 
 ## Instructions for use
@@ -45,7 +139,7 @@ Your working directory is ~/project.
 Use terminal/command prompt to run the container terminal.
 
 ```{bash}
-docker exec -it project_template_container bash
+docker exec -it rplec_container bash
 ```
 
 In the container terminal, run jupyter lab using this line of codes.
