@@ -33,114 +33,62 @@ library(rplec)
 # Data preprocessing
 
 ```{r Load our example data}
-data(beta_values)
+data(beta_values_case)
+data(beta_values_control)
 data(ga)
 data(phenotype)
 ```
 
-```{r Normalize DNA methylation values}
-norm_beta_values <- bmiq_norm(beta_values)
+```{r Normalize DNA methylation values per sample}
+norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+norm_beta_values_control <- bmiq_norm_450k(beta_values_control)
 ```
 
 # Quality control
 
 ```{r Estimate DNA-methylation-based gestational age}
-dnam_ga_sufriyana <- plec(norm_beta_values, clock = "sufriyana", type = "stack")
-dnam_ga_lee <- plec(norm_beta_values, clock = "lee", type = "rpc")
-dnam_ga_mayne <- plec(norm_beta_values, clock = "mayne")
+dnam_ga_case <- plec(norm_beta_values_case)
+dnam_ga_control <- plec(norm_beta_values_control)
+
+dnam_ga <- rbind(dnam_ga_case, dnam_ga_control)
+dnam_ga <-
+  dnam_ga |>
+  slice(match(rownames(ga), rownames(dnam_ga))) |>
+  rename(estimated_GA = output)
 ```
 
 ```{r Perform quality control}
-calib_sufriyana <- calibration_plot(dnam_ga_sufriyana, ga)
-calib_lee <- calibration_plot(dnam_ga_lee, ga)
-calib_mayne <- calibration_plot(dnam_ga_mayne, ga)
-
-rmse_sufriyana <- rmse(dnam_ga_sufriyana, ga)
-rmse_lee <- rmse(dnam_ga_lee, ga)
-rmse_mayne <- rmse(dnam_ga_mayne, ga)
-
-mae_sufriyana <- mae(dnam_ga_sufriyana, ga)
-mae_lee <- mae(dnam_ga_lee, ga)
-mae_mayne <- mae(dnam_ga_mayne, ga)
-
-pearson_r_sufriyana <- pearson_r(dnam_ga_sufriyana, ga)
-pearson_r_sufriyana <- pearson_r(dnam_ga_sufriyana, ga)
-pearson_r_sufriyana <- pearson_r(dnam_ga_sufriyana, ga)
+plec_calib <- calibration_plot(dnam_ga, ga)
+plec_rmse <- rmse(dnam_ga, ga)
+plec_mae <- mae(dnam_ga)
+plec_r <- r(dnam_ga, ga)
 ```
 
 # Identifying placental aging
 
-## Using placental epigenetic clock from Sufriyana et al
-
-```{r Sufriyana et al - Estimate placental aging for control}
-control <- which(colnames(norm_beta_values) %in% phenotype == "control")
+```{r Estimate placental aging for control}
+control <- which(colnames(norm_beta_values) %in% names(phenotype)[phenotype == "control"])
 norm_beta_values_control <- norm_beta_values[, control]
-aging_control <- plec(norm_beta_values_control, clock = "sufriyana", type = "residual")
+aging_control <- plec(norm_beta_values_control, type = "residual")
 ga_control <- ga[control, ]
 results_control <- data.frame(phenotype = "control", aging = aging_control, ga = ga_control)
 ```
 
-```{r Sufriyana et al - Estimate placental aging for case}
-case <- which(colnames(norm_beta_values) %in% phenotype == "case")
+```{r Estimate placental aging for case}
+case <- which(colnames(norm_beta_values) %in% names(phenotype)[phenotype == "case"])
 norm_beta_values_case <- norm_beta_values[, case]
-aging_case <- plec(norm_beta_values_case, clock = "sufriyana", type = "residual")
+aging_case <- plec(norm_beta_values_case, type = "residual")
 ga_case <- ga[case, ]
 results_case <- data.frame(phenotype = "case", aging = aging_case, ga = ga_case)
 ```
 
-```{r Sufriyana et al - Plot placental aging across gestational age}
+```{r Plot placental aging across gestational age}
 aging_plot <- rbind(results_control, results_case) |>
   ggplot(aes(x = ga, y = aging, color =  phenotype)) +
   geom_hline(yintercept = 0, lty = 2) +
   geom_line() +
   xlab("Gestational age (weeks' gestation)") +
   ylab("Aging (accelerated/deccelerated = +/-")
-```
-
-## Using placental epigenetic clock from Lee et al.
-
-```{r Lee et al - Estimate placental aging for control}
-rpc_control <- plec(norm_beta_values_control, clock = "lee", type = "rpc")
-cpc_control <- plec(norm_beta_values_control, clock = "lee", type = "cpc")
-aging2_control <- rpc_control - cpc_control
-results2_control <- data.frame(phenotype = "control", aging = aging2_control, ga = ga_control)
-```
-
-```{r Lee et al - Estimate placental aging for case}
-rpc_case <- plec(norm_beta_values_case, clock = "lee", type = "rpc")
-cpc_case <- plec(norm_beta_values_case, clock = "lee", type = "cpc")
-aging2_case <- rpc_case - cpc_case
-results2_case <- data.frame(phenotype = "case", aging = aging2_case, ga = ga_case)
-```
-
-```{r Lee et al - Plot placental aging across gestational age}
-aging_plot2 <- rbind(results2_control, results2_case) |>
-  ggplot(aes(x = ga, y = aging, color =  phenotype)) +
-  geom_hline(yintercept = 0, lty = 2) +
-  geom_line() +
-  xlab("Gestational age (weeks' gestation)") +
-  ylab("Aging (accelerated/deccelerated = -/+")
-```
-
-## Using placental epigenetic clock from Mayne et al.
-
-```{r Mayne et al - Estimate placental aging for control}
-aging3_control <- dnam_ga_mayne[control] - ga_control
-results3_control <- data.frame(phenotype = "control", aging = aging3_control, ga = ga_control)
-```
-
-```{r Mayne et al - Estimate placental aging for case}
-aging3_case <- dnam_ga_mayne[case] - ga_case
-results2_case <- data.frame(phenotype = "case", aging = aging3_case, ga = ga_case)
-```
-
-```{r Mayne et al - Plot placental aging across gestational age}
-aging_plot3 <- rbind(results3_control, results3_case) |>
-  ggplot(aes(x = ga, y = aging, color =  phenotype)) +
-  geom_hline(yintercept = 0, lty = 2) +
-  geom_line() +
-  xlab("Gestational age (weeks' gestation)") +
-  ylab("Aging (accelerated/deccelerated = -/+")
 ```
 
 ```{r session-info, echo=TRUE}
