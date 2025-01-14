@@ -1,0 +1,45 @@
+#' Intercept and coefficients of placental epigenetic clock
+#'
+#' A data frame of intercept and coefficients for all submodels in our 
+#' placental epigenetic_clock.
+#'
+#' @format A data frame with 10,447 rows and 32 columns:
+#' \describe{
+#'   \item{predictor}{A character value of predictor name.}
+#'   \item{ga_est}{Estimate normal GA.}
+#'   \item{fgr_pred}{Predict FGR.}
+#'   \item{pe_pred}{Predict PE.}
+#'   \item{pe_onset_pred}{Predict PE onset.}
+#'   \item{preterm_pred}{Predict preterm delivery.}
+#'   \item{anencephaly_pred}{Predict anencephaly.}
+#'   \item{spina_bifida_pred}{Predict spina bifida.}
+#'   \item{gdm_pred}{Predict GDM.}
+#'   \item{diandric_triploid_pred}{Predict diandric triploid.}
+#'   \item{miscarriage_pred}{Predict miscarriage.}
+#'   \item{lga_pred}{Predict LGA.}
+#'   \item{subfertility_pred}{Predict subfertility.}
+#'   \item{hellp_pred}{Predict HELLP.}
+#'   \item{chorioamnionitis_pred}{Predict chorioamnionitis.}
+#'   \item{ga_res_conds_fgr_est}{Estimate GA in FGR.}
+#'   \item{ga_res_conds_pe_est}{Estimate GA in PE.}
+#'   \item{ga_res_conds_pe_onset_est}{Estimate GA in EOPE.}
+#'   \item{ga_res_conds_preterm_est}{Estimate GA in preterm delivery.}
+#'   \item{ga_res_conds_anencephaly_est}{Estimate GA in anencephaly.}
+#'   \item{ga_res_conds_spina_bifida_est}{Estimate GA in spina bifida.}
+#'   \item{ga_res_conds_gdm_est}{Estimate GA in GDM.}
+#'   \item{ga_res_conds_diandric_triploid_est}{Estimate GA in diandric triploid.}
+#'   \item{ga_res_conds_miscarriage_est}{Estimate GA in miscarriage.}
+#'   \item{ga_res_conds_lga_est}{Estimate GA in LGA.}
+#'   \item{ga_res_conds_subfertility_est}{Estimate GA in subfertility.}
+#'   \item{ga_res_conds_hellp_est}{Estimate GA in HELLP.}
+#'   \item{ga_res_conds_chorioamnionitis_est}{Estimate GA in chorioamnionitis.}
+#'   \item{ga_res_conds_pred_est}{Estimate residual GA.}
+#'   \item{ga_res_comb_pr_est}{Estimate residual GA for preterm.}
+#'   \item{ga_res_comb_tb_est}{Estimate residual GA for term before the date.}
+#'   \item{ga_res_comb_ta_est}{Estimate residual GA for term after the date.}
+#' }
+#'
+#' @source Derived from the 2024 Placental Clock DREAM Challenge.
+#' @keywords dataset
+#' @name plec_int_coef
+'plec_int_coef'
