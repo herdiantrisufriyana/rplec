@@ -1,13 +1,13 @@
-# rplec: An R package of placental epigenetic clocks to estimate aging by DNA-methylation-based gestational age
+# rplec: An R package of placental epigenetic clock to estimate aging by DNA-methylation-based gestational age
 
-`rplec` is an R package designed to estimate placental aging based on gestational age using DNA methylation levels, so called placental epigenetic clock (PlEC). We developed a PlEC for the 2024 Placental Clock DREAM Challenge (https://www.synapse.org/Synapse:syn59520082/wiki/628063). Our PlEC achieved the top performance based on an independent test set. We also included two previous PlECs from Lee et al (2019) and Mayne et al (2016) in this package. It can be used to identify accelerated/decelerated aging of placenta for understanding placental dysfunction-related conditions, e.g., great obstetrical syndromes including preeclampsia, fetal growth restriction, preterm labor, preterm premature rupture of the membranes, late spontaneous abortion, and placental abruption.
+`rplec` is an R package designed to estimate placental aging based on gestational age using DNA methylation levels, so called placental epigenetic clock (PlEC). We developed a PlEC for the 2024 Placental Clock DREAM Challenge (https://www.synapse.org/Synapse:syn59520082/wiki/628063). Our PlEC achieved the top performance based on an independent test set. PlEC can be used to identify accelerated/decelerated aging of placenta for understanding placental dysfunction-related conditions, e.g., great obstetrical syndromes including preeclampsia, fetal growth restriction, preterm labor, preterm premature rupture of the membranes, late spontaneous abortion, and placental abruption.
 
 
 ## Features
 
 - **Normalize DNA methylation values**: We provided normalization feature based on beta mixture quantile (BMIQ) method before using a PlEC.
 
-- **Estimate DNA-methylation-based gestational age**: Three PlECs are available for estimating gestational age: (1) Sufriyana et al (2024); (2) Lee et al (2019); and (3) Mayne et al.
+- **Estimate DNA-methylation-based gestational age**: A PlEC is available for estimating gestational age.
 
 - **Perform quality control**: A user can evaluate the PlEC accuracy based on calibration plot, root mean squared error (RMSE), mean absolute error (MAE), and correlation coefficient (Pearson's r) before interpreting the DNA-methylation-based gestational age to identify placental aging.
 
@@ -41,21 +41,20 @@ library(rplec)
 Load our example data.
 
 ```r
-data(beta_values)
+data(beta_values_case)
+data(beta_values_control)
 ```
 
 Normalize DNA methylation values.
 
 ```r
-norm_beta_values <- bmiq_norm(beta_values)
+norm_beta_values <- bmiq_norm_450k(beta_values)
 ```
 
 Estimate DNA-methylation-based gestational age.
 
 ```r
-dnam_ga_sufriyana <- plec(norm_beta_values, clock = "sufriyana", type = "stack")
-dnam_ga_lee <- plec(norm_beta_values, clock = "lee", type = "rpc")
-dnam_ga_mayne <- plec(norm_beta_values, clock = "mayne")
+dnam_ga <- plec(norm_beta_values)
 ```
 
 
@@ -80,7 +79,7 @@ If you use `rplec` in your research, please consider citing it:
 ```bibtex
 @misc{rplec2025,
   author = {Herdiantri Sufriyana and Emily Chia-Yu Su},
-  title = {rplec: An R package of placental epigenetic clocks to estimate aging by DNA-methylation-based gestational age},
+  title = {rplec: An R package of placental epigenetic clock to estimate aging by DNA-methylation-based gestational age},
   year = {2025},
   publisher = {GitHub},
   journal = {GitHub repository},
