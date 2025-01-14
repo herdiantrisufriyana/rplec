@@ -69,6 +69,10 @@ RUN R -e "BiocManager::install('dslabs', ask=FALSE, update=FALSE, force=TRUE)"
 RUN R -e "BiocManager::install('devtools', ask=FALSE, update=FALSE, force=TRUE)"
 RUN R -e "BiocManager::install('roxygen2', ask=FALSE, update=FALSE, force=TRUE)"
 RUN R -e "BiocManager::install('rhub', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('doParallel', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('foreach', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('RPMM', ask=FALSE, update=FALSE, force=TRUE)"
+RUN R -e "BiocManager::install('pbapply', ask=FALSE, update=FALSE, force=TRUE)"
 
 # Set the working directory to ~/project on R session start
 RUN echo 'setwd("~/project")' >> /home/rstudio/.Rprofile
