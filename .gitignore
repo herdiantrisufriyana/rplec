@@ -53,3 +53,8 @@ rsconnect/
 
 # Ignore everything in archive
 archive/*
+doc/figure*
+/Meta/
+
+# Ignore local file/folders
+.DS_Store
