@@ -1,6 +1,6 @@
 #' Estimate DNA-methylation-based gestational age
 #'
-#' This function estimate gestational (GA) age using BMIQ-normalized beta 
+#' This function estimate gestational age (GA) using BMIQ-normalized beta 
 #' values. The estimated GA is a sum of normal and residual GAs. The latter 
 #' is a sum of condition- and trimester-specific, residual GAs.
 #'
@@ -66,8 +66,28 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
       plec_int_coef |>
       filter(predictor != "(Intercept)" & !str_detect(predictor, "^cg"))
     
+    cpg_scaler_mean <-
+      plec_scaler_mean |>
+      filter(str_detect(predictor, "^cg"))
+    
+    non_cpg_scaler_mean <-
+      plec_scaler_mean |>
+      filter(!str_detect(predictor, "^cg"))
+    
+    cpg_scaler_scale <-
+      plec_scaler_scale |>
+      filter(str_detect(predictor, "^cg"))
+    
+    non_cpg_scaler_scale <-
+      plec_scaler_scale |>
+      filter(!str_detect(predictor, "^cg"))
+    
     if(type %in% c("ga_est", "stack", "normal", "residual", "trimester")){
-      ga_est <- plec_vec(norm_beta, intercepts, cpg_coefs, "ga_est")
+      ga_est <-
+        plec_vec(
+          norm_beta, intercepts, cpg_coefs, cpg_scaler_mean, cpg_scaler_scale
+          , "ga_est"
+        )
     }
     
     conditions <-
@@ -89,7 +109,10 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
         )
       ){
         pred_prob[[condition]] <-
-          plec_vec(norm_beta, intercepts, cpg_coefs, paste0(condition, "_pred"))
+          plec_vec(
+            norm_beta, intercepts, cpg_coefs, cpg_scaler_mean, cpg_scaler_scale
+            , paste0(condition, "_pred")
+          )
         }
       
       if(
@@ -103,6 +126,7 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
           ga_res_conds_est[[condition]] <-
             plec_vec(
               norm_beta, intercepts, cpg_coefs
+              , cpg_scaler_mean, cpg_scaler_scale
               , paste0("ga_res_conds_", condition, "_est")
             )
         }
@@ -137,22 +161,34 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
       ga_res_conds_pred_est <-
         ga_res_conds_pred_est$residual |>
         `names<-`(rownames(ga_res_conds_pred_est)) |>
-        plec_vec(intercepts, non_cpg_coefs, "ga_res_conds_pred_est")
+        plec_vec(
+          intercepts, non_cpg_coefs, non_cpg_scaler_mean, non_cpg_scaler_scale
+          , "ga_res_conds_pred_est"
+        )
     }
     
     if(type %in% c("ga_res_comb_pr_est", "stack", "residual", "trimester")){
       ga_res_comb_pr_est <-
-        plec_vec(norm_beta, intercepts, cpg_coefs, "ga_res_comb_pr_est")
+        plec_vec(
+          norm_beta, intercepts, cpg_coefs, cpg_scaler_mean, cpg_scaler_scale
+          , "ga_res_comb_pr_est"
+        )
     }
     
     if(type %in% c("ga_res_comb_tb_est", "stack", "residual", "trimester")){
       ga_res_comb_tb_est <-
-        plec_vec(norm_beta, intercepts, cpg_coefs, "ga_res_comb_tb_est")
+        plec_vec(
+          norm_beta, intercepts, cpg_coefs, cpg_scaler_mean, cpg_scaler_scale
+          , "ga_res_comb_tb_est"
+        )
     }
     
     if(type %in% c("ga_res_comb_ta_est", "stack", "residual", "trimester")){
       ga_res_comb_ta_est <-
-        plec_vec(norm_beta, intercepts, cpg_coefs, "ga_res_comb_ta_est")
+        plec_vec(
+          norm_beta, intercepts, cpg_coefs, cpg_scaler_mean, cpg_scaler_scale
+          , "ga_res_comb_ta_est"
+        )
     }
     
     if(type %in% c("stack", "residual", "trimester")){
@@ -213,11 +249,13 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
   }
   
   # Core sub-function for individual placental epigenetic clock
-  plec_vec <- function(data, int, coefs, colname){
+  plec_vec <- function(data, int, coefs, scaler_mean, scaler_scale, colname){
     
     data <- data[match(coefs$predictor, names(data))]
+    scaled_data <- data - scaler_mean[, colname, drop = TRUE]
+    scaled_data <- scaled_data / scaler_scale[, colname, drop = TRUE]
     output <- int[, colname, drop = TRUE]
-    output <- output + sum(data * coefs[, colname, drop = TRUE])
+    output <- output + sum(scaled_data * coefs[, colname, drop = TRUE])
     
     if(str_detect(colname, "_pred$")) output <- 1 / (1 + exp(-output))
     
@@ -226,6 +264,8 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
   
   # Implement all sub-functions
   data("plec_int_coef")
+  data("plec_scaler_mean")
+  data("plec_scaler_scale")
   
   if(verbose){
     looping_fn <- pblapply
