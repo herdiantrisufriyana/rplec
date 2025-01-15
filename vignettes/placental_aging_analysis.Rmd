@@ -49,46 +49,56 @@ norm_beta_values_control <- bmiq_norm_450k(beta_values_control)
 ```{r Estimate DNA-methylation-based gestational age}
 dnam_ga_case <- plec(norm_beta_values_case)
 dnam_ga_control <- plec(norm_beta_values_control)
-
 dnam_ga <- rbind(dnam_ga_case, dnam_ga_control)
-dnam_ga <-
-  dnam_ga |>
-  slice(match(rownames(ga), rownames(dnam_ga))) |>
-  rename(estimated_GA = output)
 ```
 
 ```{r Perform quality control}
-plec_calib <- calibration_plot(dnam_ga, ga)
-plec_rmse <- rmse(dnam_ga, ga)
-plec_mae <- mae(dnam_ga)
-plec_r <- r(dnam_ga, ga)
+plec_qc <- qc(dnam_ga, ga, phenotype)
+```
+
+```{r figure-1, echo=FALSE, fig.height=5, fig.width=6}
+plec_qc
 ```
 
 # Identifying placental aging
 
-```{r Estimate placental aging for control}
-control <- which(colnames(norm_beta_values) %in% names(phenotype)[phenotype == "control"])
-norm_beta_values_control <- norm_beta_values[, control]
-aging_control <- plec(norm_beta_values_control, type = "residual")
-ga_control <- ga[control, ]
-results_control <- data.frame(phenotype = "control", aging = aging_control, ga = ga_control)
-```
-
-```{r Estimate placental aging for case}
-case <- which(colnames(norm_beta_values) %in% names(phenotype)[phenotype == "case"])
-norm_beta_values_case <- norm_beta_values[, case]
+```{r Estimate placental aging for either case or control}
 aging_case <- plec(norm_beta_values_case, type = "residual")
-ga_case <- ga[case, ]
-results_case <- data.frame(phenotype = "case", aging = aging_case, ga = ga_case)
+aging_control <- plec(norm_beta_values_control, type = "residual")
+aging <- rbind(aging_case, aging_control)
 ```
 
-```{r Plot placental aging across gestational age}
-aging_plot <- rbind(results_control, results_case) |>
-  ggplot(aes(x = ga, y = aging, color =  phenotype)) +
-  geom_hline(yintercept = 0, lty = 2) +
-  geom_line() +
-  xlab("Gestational age (weeks' gestation)") +
-  ylab("Aging (accelerated/deccelerated = +/-")
+```{r Compare case and control to identify placental aging}
+ipla_results <- ipla(aging, ga, phenotype)
+```
+
+```{r figure-2, echo=FALSE, fig.height=5, fig.width=7}
+ipla_results
+```
+
+```{r Conduct statistical test}
+ipla_stats <- ipla(aging, ga, phenotype, method = "Mann-Whitney U")
+```
+
+```{r figure-3, echo=FALSE, fig.height=5, fig.width=7}
+ipla_stats
+```
+
+```{r Show the statistical test results, echo=FALSE}
+ipla_stats$stats
+```
+
+```{r Conduct statistical test for a specific range of GA}
+ipla_stats_5_20 <-
+  ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
+```
+
+```{r figure-4, echo=FALSE, fig.height=5, fig.width=7}
+ipla_stats_5_20
+```
+
+```{r Show the statistical test results for a specific range of GA, echo=FALSE}
+ipla_stats_5_20$stats
 ```
 
 ```{r session-info, echo=TRUE}
