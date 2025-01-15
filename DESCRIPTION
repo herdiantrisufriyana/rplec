@@ -23,6 +23,7 @@ Imports:
     doParallel,
     dplyr,
     foreach,
+    ggplot2,
     parallel,
     pbapply,
     purrr,
@@ -30,11 +31,11 @@ Imports:
     stats,
     stringr,
     tibble,
+    tidyr,
     utils
 Suggests:
     tidyverse,
     knitr,
-    ggplot2,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 License: MIT + file LICENSE
