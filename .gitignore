@@ -52,7 +52,7 @@ rsconnect/
 *.Rproj
 
 # Ignore everything in archive
-archive/*
+archive*
 doc/figure*
 /Meta/
 
