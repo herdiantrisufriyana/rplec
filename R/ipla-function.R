@@ -42,19 +42,21 @@
 #'
 #' @examples
 #'
-#' # Prepare data
-#' data(aging)
-#' data(ga)
-#' data(phenotype)
-#' 
-#' # Identify placental aging
-#' ipla(aging, ga, phenotype)
-#' 
-#' ## Conduct statistical test
-#' ipla(aging, ga, phenotype, method = "Mann-Whitney U")
-#' 
-#' ## Conduct statistical test for a specific range of GA
-#' ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
+#' \dontrun{
+#'   # Prepare data
+#'   data(aging)
+#'   data(ga)
+#'   data(phenotype)
+#'   
+#'   # Identify placental aging
+#'   ipla(aging, ga, phenotype)
+#'   
+#'   ## Conduct statistical test
+#'   ipla(aging, ga, phenotype, method = "Mann-Whitney U")
+#'   
+#'   ## Conduct statistical test for a specific range of GA
+#'   ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
+#' }
 
 ipla <- 
   function(
@@ -291,10 +293,7 @@ ipla <-
       theme_minimal()
     
     # Conclude the output
-    output <- list(plot = aging_difference_plot)
-    if(!is.null(method)) output <- c(output, list(stats = stat_test_obj))
-    
-    class(output) <- "IPlA"
+    output <- aging_difference_plot
     
     return(output)
   }
