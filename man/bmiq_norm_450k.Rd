@@ -28,8 +28,10 @@ placental epigenetic clock.
 }
 \examples{
 
-data(beta_values_case)
-norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+\dontrun{
+  data(beta_values_case)
+  norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+}
 }
 \keyword{450k}
 \keyword{bmiq,}

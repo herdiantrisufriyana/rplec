@@ -28,14 +28,17 @@ load this data frame.}
 A data frame of the estimated GA.
 }
 \description{
-This function estimate gestational (GA) age using BMIQ-normalized beta
+This function estimate gestational age (GA) using BMIQ-normalized beta
 values. The estimated GA is a sum of normal and residual GAs. The latter
 is a sum of condition- and trimester-specific, residual GAs.
 }
 \examples{
 
-data(beta_values_case)
-norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+\dontrun{
+  data(beta_values_case)
+  norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+  dnam_ga_case <- plec(norm_beta_values_case)
+}
 }
 \keyword{gestational-age}
 \keyword{placental-epigenetic-clock,}
