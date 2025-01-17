@@ -84,10 +84,6 @@ ipla_stats <- ipla(aging, ga, phenotype, method = "Mann-Whitney U")
 ipla_stats
 ```
 
-```{r Show the statistical test results, echo=FALSE}
-ipla_stats$stats
-```
-
 ```{r Conduct statistical test for a specific range of GA}
 ipla_stats_5_20 <-
   ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
@@ -95,10 +91,6 @@ ipla_stats_5_20 <-
 
 ```{r figure-4, echo=FALSE, fig.height=5, fig.width=7}
 ipla_stats_5_20
-```
-
-```{r Show the statistical test results for a specific range of GA, echo=FALSE}
-ipla_stats_5_20$stats
 ```
 
 ```{r session-info, echo=TRUE}
