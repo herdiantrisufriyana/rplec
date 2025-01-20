@@ -24,9 +24,10 @@
 #'
 #' @export
 #'
-#' @importFrom dplyr mutate mutate_at rename select slice summarize
-#' @importFrom ggplot2 aes annotate coord_equal geom_abline geom_point ggplot 
-#' scale_x_continuous scale_y_continuous theme theme_minimal
+#' @importFrom dplyr group_by mutate mutate_at n pull rename select slice 
+#' summarize
+#' @importFrom ggplot2 aes annotate coord_equal element_blank geom_abline 
+#' geom_point ggplot scale_x_continuous scale_y_continuous theme theme_minimal
 #' @importFrom purrr reduce
 #' @importFrom stats cor.test qnorm sd
 #' @importFrom tidyr gather unite
