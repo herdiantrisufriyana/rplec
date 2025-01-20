@@ -26,7 +26,6 @@ vignette: >
 # Programming environment
 
 ```{r Load necessary packages}
-library(tidyverse)
 library(rplec)
 ```
 
