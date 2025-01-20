@@ -10,3 +10,4 @@
 ^Dockerfile$
 ^archive/$
 ^archive2/$
+^supp/$
