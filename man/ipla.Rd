@@ -74,5 +74,5 @@ shown in the placental aging plot.
 }
 }
 \keyword{gestational-age}
-\keyword{placental-aging,}
-\keyword{placental-epigenetic-clock,}
+\keyword{placental-aging}
+\keyword{placental-epigenetic-clock}

@@ -41,5 +41,5 @@ is a sum of condition- and trimester-specific, residual GAs.
 }
 }
 \keyword{gestational-age}
-\keyword{placental-epigenetic-clock,}
-\keyword{predict,}
+\keyword{placental-epigenetic-clock}
+\keyword{predict}

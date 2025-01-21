@@ -34,5 +34,5 @@ placental epigenetic clock.
 }
 }
 \keyword{450k}
-\keyword{bmiq,}
-\keyword{normalization,}
+\keyword{bmiq}
+\keyword{normalization}

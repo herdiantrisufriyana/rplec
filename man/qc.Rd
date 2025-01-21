@@ -44,5 +44,5 @@ the calibration plot.
 }
 }
 \keyword{gestational-age}
-\keyword{placental-epigenetic-clock,}
-\keyword{quality-control,}
+\keyword{placental-epigenetic-clock}
+\keyword{quality-control}
