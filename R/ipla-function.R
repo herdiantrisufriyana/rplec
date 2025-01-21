@@ -1,4 +1,4 @@
-#' Identify placental aging (IPlA)
+#' Identify placental aging
 #'
 #' This function identifies placental aging based on the case-control aging 
 #' difference. Placental aging is defined as the residual DNA-methylation-based 
@@ -27,7 +27,8 @@
 #' included in the statistical test. If it is undefined, the maximum GA in 
 #' either case or control is applied.
 #'
-#' @return An IPlA object consisting the plot and statistical test results.
+#' @return An ggplot object consisting the aging plot without or with 
+#' statistical test results.
 #'
 #' @keywords placental-epigenetic-clock, placental-aging, gestational-age
 #'
@@ -96,6 +97,93 @@ ipla <-
     }
     
     # Implement all sub-functions
+    ## Input validation
+    
+    ### Check that aging is a data frame
+    if (!is.data.frame(aging)) {
+      stop("'aging' must be a data frame.")
+    }
+    
+    ### Check that aging has row names
+    if (is.null(rownames(aging)) || any(is.na(rownames(aging)))) {
+      stop("'aging' must have row names representing sample IDs.")
+    }
+    
+    ### Check that aging has a column named 'output'
+    if (!"output" %in% colnames(aging)) {
+      stop("'aging' must have a column named 'output'.")
+    }
+    
+    ### Check that ga is a data frame
+    if (!is.data.frame(ga)) {
+      stop("'ga' must be a data frame.")
+    }
+    
+    ### Check that ga has row names
+    if (is.null(rownames(ga)) || any(is.na(rownames(ga)))) {
+      stop("'ga' must have row names representing sample IDs.")
+    }
+    
+    ### Check that ga has a column named 'GA'
+    if (!"GA" %in% colnames(ga)) {
+      stop("'ga' must have a column named 'GA'.")
+    }
+    
+    ### Check that phenotype is a data frame
+    if (!is.null(phenotype)) {
+      if (!is.data.frame(phenotype)) {
+        stop("'phenotype' must be a data frame if provided.")
+      }
+      
+      #### Check that phenotype has row names
+      if (is.null(rownames(phenotype)) || any(is.na(rownames(phenotype)))) {
+        stop("'phenotype' must have row names representing sample IDs.")
+      }
+      
+      #### Check that phenotype has a column named 'phenotype'
+      if (!"phenotype" %in% colnames(phenotype)) {
+        stop("'phenotype' must have a column named 'phenotype'.")
+      }
+    }
+    
+    ### Check case and control are valid strings
+    if (!is.character(case) || length(case) != 1) {
+      stop("'case' must be a single character string.")
+    }
+    if (!is.character(control) || length(control) != 1) {
+      stop("'control' must be a single character string.")
+    }
+    
+    ### Check method is valid if provided
+    if (!is.null(method)) {
+      if (!method %in% c("Mann-Whitney U", "Permutation")) {
+        stop(
+          paste0(
+            "'method' must be either 'Mann-Whitney U' or 'Permutation' if "
+            , "provided."
+          )
+        )
+      }
+    }
+    
+    ### Check from and to are valid integers
+    if (!is.null(from)) {
+      if (!is.numeric(from) || length(from) != 1 || from < 5 || from > 44) {
+        stop("'from' must be a single integer between 5 and 44.")
+      }
+    }
+    if (!is.null(to)) {
+      if (!is.numeric(to) || length(to) != 1 || to < 5 || to > 44) {
+        stop("'to' must be a single integer between 5 and 44.")
+      }
+    }
+    
+    ### Additional logic to ensure valid range for from and to
+    if (!is.null(from) && !is.null(to) && from > to) {
+      stop("'from' cannot be greater than 'to'.")
+    }
+    
+    ## Main codes
     seed <- 2025-01-10
     
     aging_order <- match(rownames(ga), rownames(aging))

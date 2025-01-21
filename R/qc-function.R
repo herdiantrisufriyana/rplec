@@ -57,6 +57,58 @@ qc <- function(dnam_ga, ga, phenotype = NULL){
   }
   
   # Implement all sub-functions
+  ## Input validation
+  
+  ### Check that dnam_ga is a data frame
+  if (!is.data.frame(dnam_ga)) {
+    stop("'dnam_ga' must be a data frame.")
+  }
+  
+  ### Check that dnam_ga has row names
+  if (is.null(rownames(dnam_ga)) || any(is.na(rownames(dnam_ga)))) {
+    stop("'dnam_ga' must have row names representing sample IDs.")
+  }
+  
+  ### Check that dnam_ga has a column named 'output'
+  if (!"output" %in% colnames(dnam_ga)) {
+    stop("'dnam_ga' must have a column named 'output'.")
+  }
+  
+  ### Check that ga is a data frame
+  if (!is.data.frame(ga)) {
+    stop("'ga' must be a data frame.")
+  }
+  
+  ### Check that ga has row names
+  if (is.null(rownames(ga)) || any(is.na(rownames(ga)))) {
+    stop("'ga' must have row names representing sample IDs.")
+  }
+  
+  ### Check that ga has a column named 'GA'
+  if (!"GA" %in% colnames(ga)) {
+    stop("'ga' must have a column named 'GA'.")
+  }
+  
+  ### If phenotype is provided, validate it
+  if (!is.null(phenotype)) {
+    
+    #### Check that phenotype is a data frame
+    if (!is.data.frame(phenotype)) {
+      stop("'phenotype' must be a data frame.")
+    }
+    
+    #### Check that phenotype has row names
+    if (is.null(rownames(phenotype)) || any(is.na(rownames(phenotype)))) {
+      stop("'phenotype' must have row names representing sample IDs.")
+    }
+    
+    #### Check that phenotype has a column named 'phenotype'
+    if (!"phenotype" %in% colnames(phenotype)) {
+      stop("'phenotype' must have a column named 'phenotype'.")
+    }
+  }
+  
+  ## Main codes
   dnam_ga_order <- match(rownames(ga), rownames(dnam_ga))
   dnam_ga <- rename(slice(dnam_ga, dnam_ga_order), Yhat = output)
   

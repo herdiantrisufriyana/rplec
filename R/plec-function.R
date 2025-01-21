@@ -40,7 +40,7 @@
 #'   dnam_ga_case <- plec(norm_beta_values_case)
 #' }
 
-plec <- function(norm_beta, type = "stack", verbose = TRUE){
+plec <- function(norm_beta, type = "stack", verbose = FALSE){
   
   # Wrapper sub-function for running 1 sample (message output is hidden)
   plec_df1 <- function(x, data, ...){
@@ -266,9 +266,57 @@ plec <- function(norm_beta, type = "stack", verbose = TRUE){
   }
   
   # Implement all sub-functions
-  data("plec_int_coef")
-  data("plec_scaler_mean")
-  data("plec_scaler_scale")
+  ## Input validation
+  
+  ### Check that norm_beta is a data frame
+  if (!is.data.frame(norm_beta)) {
+    stop("'norm_beta' must be a data frame.")
+  }
+  
+  ### Check that norm_beta has row names
+  if (is.null(rownames(norm_beta)) || any(is.na(rownames(norm_beta)))) {
+    stop("'norm_beta' must have row names representing probe IDs.")
+  }
+  
+  ### Check that norm_beta has column names
+  if (is.null(colnames(norm_beta)) || any(is.na(colnames(norm_beta)))) {
+    stop("'norm_beta' must have column names representing sample IDs.")
+  }
+  
+  ### Validate the 'type' argument
+  valid_types <- c(
+    "stack", "normal", "residual", "condition", "trimester",
+    "ga_est", "ga_res_comb_pr_est", "ga_res_comb_tb_est", "ga_res_comb_ta_est",
+    "ga_res_conds_pred_est", 
+    paste0(
+      "ga_res_conds_"
+      , c("fgr", "pe", "pe_onset", "preterm", "anencephaly",
+          "spina_bifida", "gdm", "diandric_triploid", "miscarriage",
+          "lga", "subfertility", "hellp", "chorioamnionitis"
+        )
+      , "_est"
+    ),
+    paste0(
+      c("fgr", "pe", "pe_onset", "preterm", "anencephaly", "spina_bifida",
+        "gdm", "diandric_triploid", "miscarriage", "lga", "subfertility", 
+        "hellp", "chorioamnionitis"
+      )
+      , "_pred"
+    )
+  )
+  if (!type %in% valid_types) {
+    stop("'type' must be one of: ", paste(valid_types, collapse = ", "), ".")
+  }
+  
+  ### Check that 'verbose' is a logical scalar
+  if (!is.logical(verbose) || length(verbose) != 1) {
+    stop("'verbose' must be a logical scalar.")
+  }
+  
+  ## Main codes
+  plec_int_coef <- get("plec_int_coef", envir = environment())
+  plec_scaler_mean <- get("plec_scaler_mean", envir = environment())
+  plec_scaler_scale <- get("plec_scaler_scale", envir = environment())
   
   if(verbose){
     looping_fn <- pblapply

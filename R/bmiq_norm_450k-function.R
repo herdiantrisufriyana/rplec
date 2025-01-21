@@ -37,7 +37,7 @@
 #'   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
 #' }
 
-bmiq_norm_450k <- function(beta, cores = 1, verbose = TRUE){
+bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
   
   # Wrapper sub-function for running 1 sample (message output is hidden)
   bmiq_norm_df1 <- function(x, data, ...){
@@ -282,8 +282,39 @@ bmiq_norm_450k <- function(beta, cores = 1, verbose = TRUE){
   }
   
   # Implement all sub-functions
-  data("probe_info_450k")
+  ## Input validation
+  if (!is.data.frame(beta)) {
+    stop("'beta' must be a data frame.")
+  }
   
+  if (is.null(rownames(beta)) || any(is.na(rownames(beta)))) {
+    stop("'beta' must have row names representing probe IDs.")
+  }
+  
+  if (is.null(rownames(beta)) || any(is.na(colnames(beta)))) {
+    stop("'beta' must have column names representing sample IDs.")
+  }
+  
+  if (!is.numeric(cores) || cores < 1 || cores != as.integer(cores)) {
+    stop("'cores' must be a positive integer.")
+  }
+  
+  if (!is.logical(verbose) || length(verbose) != 1) {
+    stop("'verbose' must be a logical scalar.")
+  }
+  
+  probe_info_450k <- get("probe_info_450k", envir = environment())
+  required_probes <- probe_info_450k$probeID
+  
+  if (!all(required_probes %in% rownames(beta))) {
+    missing_probes <- setdiff(required_probes, rownames(beta))
+    stop(
+      "The following required probes are missing from 'beta': ",
+      paste(missing_probes, collapse = ", ")
+    )
+  }
+  
+  ## Main codes
   beta <-
     beta |>
     rownames_to_column(var = "probe_id") |>
