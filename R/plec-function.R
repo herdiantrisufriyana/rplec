@@ -21,7 +21,7 @@
 #'
 #' @return A data frame of the estimated GA.
 #'
-#' @keywords placental-epigenetic-clock, predict, gestational-age
+#' @keywords placental-epigenetic-clock predict gestational-age
 #'
 #' @export
 #'

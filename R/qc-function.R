@@ -20,7 +20,7 @@
 #'
 #' @return A ggplot object of calibration plot with RMSE, MAE, and r.
 #'
-#' @keywords placental-epigenetic-clock, quality-control, gestational-age
+#' @keywords placental-epigenetic-clock quality-control gestational-age
 #'
 #' @export
 #'

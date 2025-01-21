@@ -30,7 +30,7 @@
 #' @return An ggplot object consisting the aging plot without or with 
 #' statistical test results.
 #'
-#' @keywords placental-epigenetic-clock, placental-aging, gestational-age
+#' @keywords placental-epigenetic-clock placental-aging gestational-age
 #'
 #' @export
 #'

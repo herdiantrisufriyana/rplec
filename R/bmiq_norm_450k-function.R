@@ -15,7 +15,7 @@
 #'
 #' @return A data frame of normalized beta values.
 #'
-#' @keywords bmiq, normalization, 450k
+#' @keywords bmiq normalization 450k
 #'
 #' @export
 #'
