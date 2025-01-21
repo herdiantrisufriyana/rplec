@@ -8,6 +8,6 @@
 ^.github$
 ^\.Rproj\.user$
 ^Dockerfile$
-^archive/$
-^archive2/$
-^supp/$
+^archive$
+^archive2$
+^supp$
