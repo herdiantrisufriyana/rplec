@@ -58,4 +58,3 @@ doc/figure*
 
 # Ignore local file/folders
 .DS_Store
-/doc/

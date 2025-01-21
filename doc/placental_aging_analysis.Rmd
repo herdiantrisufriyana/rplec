@@ -1,0 +1,103 @@
+---
+title: "Placental Aging Analysis"
+author:
+  - name: Herdiantri Sufriyana
+    affiliation:
+    - &ibi Institute of Biomedical Informatics, College of Medicine, National 
+      Yang Ming Chiao Tung University, Taipei, Taiwan. 
+    email: herdi@nycu.edu.tw
+  - name: Emily Chia-Yu Su
+    affiliation:
+    - *ibi
+date: "2025-01-10"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+vignette: >
+  %\VignetteIndexEntry{Machine Learning Nomogram Exemplar}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Programming environment
+
+```{r Load necessary packages}
+library(rplec)
+```
+
+# Data preprocessing
+
+```{r Load our example data}
+data(beta_values_case)
+data(beta_values_control)
+data(ga)
+data(phenotype)
+```
+
+```{r Normalize DNA methylation values per sample}
+norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+norm_beta_values_control <- bmiq_norm_450k(beta_values_control)
+```
+
+# Quality control
+
+```{r Estimate DNA-methylation-based gestational age}
+dnam_ga_case <- plec(norm_beta_values_case)
+dnam_ga_control <- plec(norm_beta_values_control)
+dnam_ga <- rbind(dnam_ga_case, dnam_ga_control)
+```
+
+```{r Perform quality control}
+plec_qc <- qc(dnam_ga, ga, phenotype)
+```
+
+```{r figure-1, echo=FALSE, fig.height=5, fig.width=6}
+plec_qc
+```
+
+# Identifying placental aging
+
+```{r Estimate placental aging for either case or control}
+aging_case <- plec(norm_beta_values_case, type = "residual")
+aging_control <- plec(norm_beta_values_control, type = "residual")
+aging <- rbind(aging_case, aging_control)
+```
+
+```{r Compare case and control to identify placental aging}
+ipla_results <- ipla(aging, ga, phenotype)
+```
+
+```{r figure-2, echo=FALSE, fig.height=5, fig.width=7}
+ipla_results
+```
+
+```{r Conduct statistical test}
+ipla_stats <- ipla(aging, ga, phenotype, method = "Mann-Whitney U")
+```
+
+```{r figure-3, echo=FALSE, fig.height=5, fig.width=7}
+ipla_stats
+```
+
+```{r Conduct statistical test for a specific range of GA}
+ipla_stats_5_20 <-
+  ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
+```
+
+```{r figure-4, echo=FALSE, fig.height=5, fig.width=7}
+ipla_stats_5_20
+```
+
+```{r session-info, echo=TRUE}
+sessionInfo()
+```
+
+
+
+
+
+
