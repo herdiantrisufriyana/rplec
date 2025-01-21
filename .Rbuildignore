@@ -11,3 +11,5 @@
 ^archive$
 ^archive2$
 ^supp$
+^data/beta_values_case\.rda$
+^data/beta_values_control\.rda$
