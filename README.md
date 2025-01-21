@@ -42,19 +42,18 @@ Load our example data.
 
 ```r
 data(beta_values_case)
-data(beta_values_control)
 ```
 
 Normalize DNA methylation values.
 
 ```r
-norm_beta_values <- bmiq_norm_450k(beta_values)
+norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
 ```
 
 Estimate DNA-methylation-based gestational age.
 
 ```r
-dnam_ga <- plec(norm_beta_values)
+dnam_ga_case <- plec(norm_beta_values_case)
 ```
 
 
