@@ -2,7 +2,7 @@
 % Please edit documentation in R/ipla-function.R
 \name{ipla}
 \alias{ipla}
-\title{Identify placental aging (IPlA)}
+\title{Identify placental aging}
 \usage{
 ipla(
   aging,
@@ -46,7 +46,8 @@ included in the statistical test. If it is undefined, the maximum GA in
 either case or control is applied.}
 }
 \value{
-An IPlA object consisting the plot and statistical test results.
+An ggplot object consisting the aging plot without or with
+statistical test results.
 }
 \description{
 This function identifies placental aging based on the case-control aging

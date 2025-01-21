@@ -4,7 +4,7 @@
 \alias{bmiq_norm_450k}
 \title{Normalize DNA methylation values}
 \usage{
-bmiq_norm_450k(beta, cores = 1, verbose = TRUE)
+bmiq_norm_450k(beta, cores = 1, verbose = FALSE)
 }
 \arguments{
 \item{beta}{A data frame of beta values where each column represents a

@@ -4,7 +4,7 @@
 \alias{plec}
 \title{Estimate DNA-methylation-based gestational age}
 \usage{
-plec(norm_beta, type = "stack", verbose = TRUE)
+plec(norm_beta, type = "stack", verbose = FALSE)
 }
 \arguments{
 \item{norm_beta}{A data frame of normalized beta values where each column
