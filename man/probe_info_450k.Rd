@@ -18,7 +18,7 @@ Derived from \code{ChAMP} R package.
 probe_info_450k
 }
 \description{
-A list of 450K probe information for \code{\link{bmiq_norm}} function. The
+A list of 450K probe information for \code{\link{bmiq_norm_450k}} function. The
 probes are already filtered and ordered the same way to the input when we
 developed our placental epigenetic clock.
 }
