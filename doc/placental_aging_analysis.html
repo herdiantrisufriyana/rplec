@@ -1506,8 +1506,8 @@ Taiwan.<br><h4 class="date">2025-01-10</h4>
 </div>
 <div id="data-preprocessing" class="section level1">
 <h1>Data preprocessing</h1>
-<pre class="r"><code>data(beta_values_case)
-data(beta_values_control)
+<pre class="r"><code>beta_values_case &lt;- download_beta_values_case()
+beta_values_control &lt;- download_beta_values_control()
 data(ga)
 data(phenotype)</code></pre>
 <pre class="r"><code>norm_beta_values_case &lt;- bmiq_norm_450k(beta_values_case)
@@ -1557,7 +1557,7 @@ aging &lt;- rbind(aging_case, aging_control)</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] rplec_0.1.1
+## [1] rplec_0.1.2
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] gtable_0.3.6      jsonlite_1.8.9    highr_0.11        dplyr_1.1.4      

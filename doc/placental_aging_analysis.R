@@ -2,8 +2,8 @@
 library(rplec)
 
 ## ----Load our example data----------------------------------------------------
-data(beta_values_case)
-data(beta_values_control)
+beta_values_case <- download_beta_values_case()
+beta_values_control <- download_beta_values_control()
 data(ga)
 data(phenotype)
 

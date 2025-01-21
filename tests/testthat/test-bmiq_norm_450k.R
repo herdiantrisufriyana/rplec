@@ -6,7 +6,7 @@ test_that("bmiq_norm_450k validates inputs correctly", {
   required_probes <- probe_info_450k$probeID
   
   # Create mock data for valid input
-  beta <- get("beta_values_case", envir = environment())
+  beta <- download_beta_values_case()
   beta <- beta[, 1, drop = FALSE]
   
   # Test valid input

@@ -35,7 +35,7 @@ is a sum of condition- and trimester-specific, residual GAs.
 \examples{
 
 \dontrun{
-  data(beta_values_case)
+  beta_values_case <- download_beta_values_case()
   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
   dnam_ga_case <- plec(norm_beta_values_case)
 }

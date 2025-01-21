@@ -2,7 +2,7 @@ library(testthat)
 
 test_that("qc validates inputs correctly", {
   # Create mock data for valid input
-  beta <- get("beta_values_case", envir = environment())
+  beta <- download_beta_values_case()
   beta <- beta[, 1:2, drop = FALSE]
   norm_beta <- bmiq_norm_450k(beta)
   dnam_ga <- plec(norm_beta)
