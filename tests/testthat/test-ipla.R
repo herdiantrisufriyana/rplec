@@ -13,9 +13,11 @@ test_that("ipla validates inputs correctly", {
   to <- 20
   
   # Test valid input
+  set.seed(1)
   expect_error(ipla(aging, ga, phenotype, case, control, method, from, to), NA)
   
   # Test 'aging' is not a data frame
+  set.seed(1)
   expect_error(
     ipla(as.matrix(aging), ga, phenotype, case, control, method, from, to),
     "'aging' must be a data frame."
@@ -23,12 +25,14 @@ test_that("ipla validates inputs correctly", {
   
   # Test 'aging' missing 'output' column
   aging_missing_output <- aging[, -1, drop = FALSE]
+  set.seed(1)
   expect_error(
     ipla(aging_missing_output, ga, phenotype, case, control, method, from, to),
     "'aging' must have a column named 'output'."
   )
   
   # Test 'ga' is not a data frame
+  set.seed(1)
   expect_error(
     ipla(aging, as.matrix(ga), phenotype, case, control, method, from, to),
     "'ga' must be a data frame."
@@ -36,6 +40,7 @@ test_that("ipla validates inputs correctly", {
   
   # Test 'ga' missing 'GA' column
   ga_missing_ga_column <- ga[, -1, drop = FALSE]
+  set.seed(1)
   expect_error(
     ipla(
       aging, ga_missing_ga_column, phenotype, case, control, method, from, to
@@ -44,6 +49,7 @@ test_that("ipla validates inputs correctly", {
   )
   
   # Test 'phenotype' is not a data frame
+  set.seed(1)
   expect_error(
     ipla(aging, ga, as.matrix(phenotype), case, control, method, from, to),
     "'phenotype' must be a data frame if provided."
@@ -51,24 +57,28 @@ test_that("ipla validates inputs correctly", {
   
   # Test 'phenotype' missing 'phenotype' column
   phenotype_missing_column <- phenotype[, -1, drop = FALSE]
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype_missing_column, case, control, method, from, to),
     "'phenotype' must have a column named 'phenotype'."
   )
   
   # Test invalid 'case'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case = 123, control, method, from, to),
     "'case' must be a single character string."
   )
   
   # Test invalid 'control'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control = 123, method, from, to),
     "'control' must be a single character string."
   )
   
   # Test invalid 'method'
+  set.seed(1)
   expect_error(
     ipla(
       aging, ga, phenotype, case, control, method = "InvalidMethod", from, to
@@ -77,29 +87,34 @@ test_that("ipla validates inputs correctly", {
   )
   
   # Test invalid 'from'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control, method, from = 50, to),
     "'from' must be a single integer between 5 and 44."
   )
   
   # Test invalid 'to'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control, method, from, to = 50),
     "'to' must be a single integer between 5 and 44."
   )
   
   # Test 'from' greater than 'to'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control, method, from = 20, to = 10),
     "'from' cannot be greater than 'to'."
   )
   
   # Test valid input with null 'method'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control, method = NULL, from, to), NA
   )
   
   # Test valid input with null 'from' and 'to'
+  set.seed(1)
   expect_error(
     ipla(aging, ga, phenotype, case, control, method, from = NULL, to = NULL)
     , NA
