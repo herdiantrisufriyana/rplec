@@ -63,7 +63,7 @@ Explore detailed examples and methodologies in the following vignettes:
 
 - [**Placental Aging Analysis**](https://herdiantrisufriyana.github.io/rplec/doc/placental_aging_analysis.html): A data analysis pipeline to identify placental aging using `rplec`.
 
-- [**Reference Manual**](https://github.com/herdiantrisufriyana/rplec/blob/master/extras/rplec_0.1.2.pdf): Comprehensive documentation of all functions and features available in `rplec`. Ideal for detailed reference and advanced use cases.
+- [**Reference Manual**](https://github.com/herdiantrisufriyana/rplec/blob/master/extras/rplec_0.1.3.pdf): Comprehensive documentation of all functions and features available in `rplec`. Ideal for detailed reference and advanced use cases.
 
 
 ## License
