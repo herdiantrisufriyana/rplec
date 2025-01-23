@@ -32,10 +32,8 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'   beta_values_case <- download_beta_values_case()
-#'   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
-#' }
+#' beta_values_case <- download_beta_values_case()
+#' norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
 
 bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
   
@@ -87,7 +85,6 @@ bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
   bmiq_norm_vec <- function(beta.v, design.v, sampleID){
     nL <- 3
     doH <- TRUE
-    nfit <- 10000
     th1.v <- c(0.2, 0.75)
     niter <- 5
     tol <- 0.001
@@ -116,8 +113,7 @@ bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
     
     # Fit type 1
     ## Fitting EM beta mixture to type 1 probes
-    set.seed(1234567)
-    rand.idx <- sample(1:length(beta1.v), nfit, replace = FALSE)
+    rand.idx <- beta_v_indices$beta1.v
     em1.o <-
       blc(
         matrix(beta1.v[rand.idx], ncol = 1)
@@ -167,8 +163,7 @@ bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
     w0.m[which(beta2.v > th2.v[2]), 3] <- 1
     
     ## Fitting EM beta mixture to type 2 probes
-    set.seed(1234567)
-    rand.idx <- sample(1:length(beta2.v), nfit, replace = FALSE)
+    rand.idx <- beta_v_indices$beta2.v
     em2.o <-
       blc(
         matrix(beta2.v[rand.idx], ncol = 1)
@@ -327,6 +322,8 @@ bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
   }else{
     looping_fn <- lapply
   }
+  
+  beta_v_indices <- get("beta_v_indices", envir = environment())
   
   1:ncol(beta) |>
     looping_fn(
