@@ -43,21 +43,22 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'   # Prepare data
-#'   data(aging)
-#'   data(ga)
-#'   data(phenotype)
-#'   
-#'   # Identify placental aging
-#'   ipla(aging, ga, phenotype)
-#'   
-#'   ## Conduct statistical test
-#'   ipla(aging, ga, phenotype, method = "Mann-Whitney U")
-#'   
-#'   ## Conduct statistical test for a specific range of GA
-#'   ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
-#' }
+#' # Prepare data
+#' data(aging)
+#' data(ga)
+#' data(phenotype)
+#' 
+#' # Identify placental aging
+#' set.seed(1)
+#' ipla(aging, ga, phenotype)
+#' 
+#' ## Conduct statistical test
+#' set.seed(1)
+#' ipla(aging, ga, phenotype, method = "Mann-Whitney U")
+#' 
+#' ## Conduct statistical test for a specific range of GA
+#' set.seed(1)
+#' ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
 
 ipla <- 
   function(
@@ -79,7 +80,6 @@ ipla <-
       
       for (i in 1:n_bootstrap) {
         # Resample x and y with replacement
-        set.seed(seed + i)
         resample_indices <- sample(seq_along(x), replace = TRUE)
         x_resampled <- x[resample_indices]
         y_resampled <- y[resample_indices]
@@ -184,8 +184,6 @@ ipla <-
     }
     
     ## Main codes
-    seed <- 2025-01-10
-    
     aging_order <- match(rownames(ga), rownames(aging))
     aging <- rename(slice(aging, aging_order), aging = output)
     phenotype_order <- match(rownames(ga), rownames(phenotype))
@@ -288,7 +286,6 @@ ipla <-
         p_value <- wilcox_test$p.value
       }else{
         ### Permutation Test within range
-        set.seed(seed)
         n_permutations <- 1000
         distance1 <- mean(abs(y1_interp_subset))
         distance2 <- mean(abs(y2_interp_subset))

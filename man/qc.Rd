@@ -33,15 +33,14 @@ the calibration plot.
 }
 \examples{
 
-\dontrun{
-  beta_values_case <- download_beta_values_case()
-  norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
-  dnam_ga_case <- plec(norm_beta_values_case)
-  
-  data(ga)
-  ga_case <- ga[phenotype$phenotype == "Case", , drop = FALSE]
-  qc(dnam_ga_case, ga_case)
-}
+beta_values_case <- download_beta_values_case()
+norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+dnam_ga_case <- plec(norm_beta_values_case)
+
+data(ga)
+ga_case <- ga[phenotype$phenotype == "Case", , drop = FALSE]
+set.seed(1)
+qc(dnam_ga_case, ga_case)
 }
 \keyword{gestational-age}
 \keyword{placental-epigenetic-clock}

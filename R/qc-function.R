@@ -34,15 +34,14 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'   beta_values_case <- download_beta_values_case()
-#'   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
-#'   dnam_ga_case <- plec(norm_beta_values_case)
-#'   
-#'   data(ga)
-#'   ga_case <- ga[phenotype$phenotype == "Case", , drop = FALSE]
-#'   qc(dnam_ga_case, ga_case)
-#' }
+#' beta_values_case <- download_beta_values_case()
+#' norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+#' dnam_ga_case <- plec(norm_beta_values_case)
+#' 
+#' data(ga)
+#' ga_case <- ga[phenotype$phenotype == "Case", , drop = FALSE]
+#' set.seed(1)
+#' qc(dnam_ga_case, ga_case)
 
 qc <- function(dnam_ga, ga, phenotype = NULL){
   
@@ -121,12 +120,9 @@ qc <- function(dnam_ga, ga, phenotype = NULL){
     data <- cbind(dnam_ga, select(ga, Y = GA))
   }
   
-  seed <- 2025-01-10
   boot_eval <- list()
   
   for(b in seq(30)){
-    set.seed(seed + b)
-    
     i <-
       data |>
       nrow() |>

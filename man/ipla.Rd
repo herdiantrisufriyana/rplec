@@ -57,21 +57,22 @@ shown in the placental aging plot.
 }
 \examples{
 
-\dontrun{
-  # Prepare data
-  data(aging)
-  data(ga)
-  data(phenotype)
-  
-  # Identify placental aging
-  ipla(aging, ga, phenotype)
-  
-  ## Conduct statistical test
-  ipla(aging, ga, phenotype, method = "Mann-Whitney U")
-  
-  ## Conduct statistical test for a specific range of GA
-  ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
-}
+# Prepare data
+data(aging)
+data(ga)
+data(phenotype)
+
+# Identify placental aging
+set.seed(1)
+ipla(aging, ga, phenotype)
+
+## Conduct statistical test
+set.seed(1)
+ipla(aging, ga, phenotype, method = "Mann-Whitney U")
+
+## Conduct statistical test for a specific range of GA
+set.seed(1)
+ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
 }
 \keyword{gestational-age}
 \keyword{placental-aging}
