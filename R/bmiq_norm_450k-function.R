@@ -32,8 +32,10 @@
 #'
 #' @examples
 #'
-#' beta_values_case <- download_beta_values_case()
-#' norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+#' \donttest{
+#'   beta_values_case <- download_beta_values_case()
+#'   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+#' }
 
 bmiq_norm_450k <- function(beta, cores = 1, verbose = FALSE){
   
