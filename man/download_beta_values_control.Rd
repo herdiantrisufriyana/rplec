@@ -24,9 +24,8 @@ Downloads and loads beta values for the control group. Data contains beta
 values for 5 samples and 452,453 probes.
 }
 \examples{
-\dontrun{
-  beta_values_control <- download_beta_values_control()
-  head(beta_values_control)
-}
+
+beta_values_control <- download_beta_values_control()
+head(beta_values_control)
 }
 \keyword{dataset}

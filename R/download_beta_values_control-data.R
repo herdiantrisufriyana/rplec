@@ -16,10 +16,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'   beta_values_control <- download_beta_values_control()
-#'   head(beta_values_control)
-#' }
+#' 
+#' beta_values_control <- download_beta_values_control()
+#' head(beta_values_control)
 
 download_beta_values_control <- function() {
   url <-

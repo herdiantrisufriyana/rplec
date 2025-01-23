@@ -24,9 +24,8 @@ Downloads and loads beta values for the case group. Data contains beta
 values for 5 samples and 452,453 probes.
 }
 \examples{
-\dontrun{
-  beta_values_case <- download_beta_values_case()
-  head(beta_values_case)
-}
+
+beta_values_case <- download_beta_values_case()
+head(beta_values_case)
 }
 \keyword{dataset}

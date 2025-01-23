@@ -34,11 +34,9 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'   beta_values_case <- download_beta_values_case()
-#'   norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
-#'   dnam_ga_case <- plec(norm_beta_values_case)
-#' }
+#' beta_values_case <- download_beta_values_case()
+#' norm_beta_values_case <- bmiq_norm_450k(beta_values_case)
+#' dnam_ga_case <- plec(norm_beta_values_case)
 
 plec <- function(norm_beta, type = "stack", verbose = FALSE){
   

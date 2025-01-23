@@ -16,10 +16,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'   beta_values_case <- download_beta_values_case()
-#'   head(beta_values_case)
-#' }
+#' 
+#' beta_values_case <- download_beta_values_case()
+#' head(beta_values_case)
 
 download_beta_values_case <- function() {
   url <-
