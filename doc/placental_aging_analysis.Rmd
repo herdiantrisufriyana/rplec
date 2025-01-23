@@ -52,6 +52,7 @@ dnam_ga <- rbind(dnam_ga_case, dnam_ga_control)
 ```
 
 ```{r Perform quality control}
+set.seed(1)
 plec_qc <- qc(dnam_ga, ga, phenotype)
 ```
 
@@ -68,6 +69,7 @@ aging <- rbind(aging_case, aging_control)
 ```
 
 ```{r Compare case and control to identify placental aging}
+set.seed(1)
 ipla_results <- ipla(aging, ga, phenotype)
 ```
 
@@ -76,6 +78,7 @@ ipla_results
 ```
 
 ```{r Conduct statistical test}
+set.seed(1)
 ipla_stats <- ipla(aging, ga, phenotype, method = "Mann-Whitney U")
 ```
 
@@ -84,6 +87,7 @@ ipla_stats
 ```
 
 ```{r Conduct statistical test for a specific range of GA}
+set.seed(1)
 ipla_stats_5_20 <-
   ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
 ```

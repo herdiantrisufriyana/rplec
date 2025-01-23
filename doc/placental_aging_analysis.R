@@ -17,6 +17,7 @@ dnam_ga_control <- plec(norm_beta_values_control)
 dnam_ga <- rbind(dnam_ga_case, dnam_ga_control)
 
 ## ----Perform quality control--------------------------------------------------
+set.seed(1)
 plec_qc <- qc(dnam_ga, ga, phenotype)
 
 ## ----figure-1, echo=FALSE, fig.height=5, fig.width=6--------------------------
@@ -28,18 +29,21 @@ aging_control <- plec(norm_beta_values_control, type = "residual")
 aging <- rbind(aging_case, aging_control)
 
 ## ----Compare case and control to identify placental aging---------------------
+set.seed(1)
 ipla_results <- ipla(aging, ga, phenotype)
 
 ## ----figure-2, echo=FALSE, fig.height=5, fig.width=7--------------------------
 ipla_results
 
 ## ----Conduct statistical test-------------------------------------------------
+set.seed(1)
 ipla_stats <- ipla(aging, ga, phenotype, method = "Mann-Whitney U")
 
 ## ----figure-3, echo=FALSE, fig.height=5, fig.width=7--------------------------
 ipla_stats
 
 ## ----Conduct statistical test for a specific range of GA----------------------
+set.seed(1)
 ipla_stats_5_20 <-
   ipla(aging, ga, phenotype, method = "Mann-Whitney U", from = 5, to = 20)
 
