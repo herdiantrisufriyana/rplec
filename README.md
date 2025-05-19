@@ -87,6 +87,8 @@ If you use `rplec` in your research, please consider citing it:
 }
 ```
 
+Preprint of an article published in the 47th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC).
+
 ## Contact
 
 For questions or support, please contact herdi[at]nycu.edu.tw.
