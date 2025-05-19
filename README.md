@@ -1,6 +1,6 @@
 # rplec: An R package of placental epigenetic clock to estimate aging by DNA-methylation-based gestational age
 
-`rplec` is an R package designed to estimate placental aging based on gestational age using DNA methylation levels, so called placental epigenetic clock (PlEC). We developed a PlEC for the 2024 Placental Clock DREAM Challenge (https://www.synapse.org/Synapse:syn59520082/wiki/628063). Our PlEC achieved the top performance based on an independent test set. PlEC can be used to identify accelerated/decelerated aging of placenta for understanding placental dysfunction-related conditions, e.g., great obstetrical syndromes including preeclampsia, fetal growth restriction, preterm labor, preterm premature rupture of the membranes, late spontaneous abortion, and placental abruption.
+`rplec` is an R package designed to estimate placental aging based on gestational age using DNA methylation levels, so called placental epigenetic clock (PlEC). We developed a PlEC for the 2024 Placental Clock DREAM Challenge (https://www.synapse.org/Synapse:syn59520082/wiki/628063). Our PlEC achieved the top performance based on an independent test set. PlEC can be used to identify accelerated/decelerated aging of placenta for understanding placental dysfunction-related conditions, e.g., great obstetrical syndromes including preeclampsia, fetal growth restriction, preterm labor, preterm premature rupture of the membranes, late spontaneous abortion, and placental abruption (https://doi.org/10.1101/2025.02.04.636367).
 
 
 ## Features
