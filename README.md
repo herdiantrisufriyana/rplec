@@ -76,16 +76,16 @@ Explore detailed examples and methodologies in the following vignettes:
 If you use `rplec` in your research, please consider citing it:
 
 ```bibtex
-@misc{rplec2025,
-  author = {Herdiantri Sufriyana and Emily Chia-Yu Su},
-  title = {rplec: An R package of placental epigenetic clock to estimate aging by DNA-methylation-based gestational age},
-  year = {2025},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\\url{https://github.com/herdiantrisufriyana/rplec}}
+@article{rplec2025,
+  author       = {Herdiantri Sufriyana and Emily Chia-Yu Su},
+  title        = {rplec: An R package of placental epigenetic clock to estimate aging by DNA-methylation-based gestational age},
+  year         = {2025},
+  journal      = {bioRxiv},
+  doi          = {10.1101/2025.02.04.636367},
+  url          = {https://doi.org/10.1101/2025.02.04.636367},
+  note         = {Preprint}
 }
 ```
-
 
 ## Contact
 
